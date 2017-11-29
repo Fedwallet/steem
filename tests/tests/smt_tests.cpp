@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE( smt_create_apply )
 {
    try
    {
-      set_price_feed( price( ASSET( "1.000 TESTS" ), ASSET( "1.000 TBD" ) ) );
+      set_price_feed( price( ASSET( "1.000 TBD" ), ASSET( "1.000 TESTS" ) ) );
 
       ACTORS( (alice)(bob) )
       SMT_SYMBOL( alice, 3 );
@@ -307,14 +307,14 @@ BOOST_AUTO_TEST_CASE( set_setup_parameters_apply )
 {
    try
    {
-      set_price_feed( price( ASSET( "1.000 TESTS" ), ASSET( "1.000 TBD" ) ) );
+      set_price_feed( price( ASSET( "1.000 TBD" ), ASSET( "1.000 TESTS" ) ) );
       ACTORS( (dany)(eddy) )
 
       fund( "dany", 5000 );
       convert( "dany", ASSET( "5000.000 TESTS" ) );
 
       signed_transaction tx;
-      
+
       smt_set_setup_parameters_operation op;
       op.control_account = "dany";
 
@@ -344,9 +344,9 @@ BOOST_AUTO_TEST_CASE( set_setup_parameters_apply )
       tx1.operations.push_back( op );
       tx1.set_expiration( db->head_block_time() + STEEM_MAX_TIME_UNTIL_EXPIRATION );
       tx1.sign( eddy_private_key, db->get_chain_id() );
-      
+
       STEEM_REQUIRE_THROW( db->push_transaction( tx1, 0 ), fc::exception ); // wrong private key
-      
+
       signed_transaction tx2;
 
       op.setup_parameters.clear();
@@ -357,7 +357,7 @@ BOOST_AUTO_TEST_CASE( set_setup_parameters_apply )
       tx2.sign( dany_private_key, db->get_chain_id() );
 
       db->push_transaction( tx2, 0 );
-      
+
       signed_transaction tx3;
 
       op.setup_parameters.clear();
@@ -367,7 +367,7 @@ BOOST_AUTO_TEST_CASE( set_setup_parameters_apply )
       tx3.sign( dany_private_key, db->get_chain_id() );
 
       db->push_transaction( tx3, 0 );
-      
+
       // TODO:
       // - check applying smt_set_setup_parameters_operation after setup completed
    }
@@ -486,7 +486,7 @@ BOOST_AUTO_TEST_CASE( runtime_parameters_apply )
 {
    try
    {
-      set_price_feed( price( ASSET( "1.000 TESTS" ), ASSET( "1.000 TBD" ) ) );
+      set_price_feed( price( ASSET( "1.000 TBD" ), ASSET( "1.000 TESTS" ) ) );
 
       ACTORS( (alice) )
 
